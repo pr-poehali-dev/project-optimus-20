@@ -22,10 +22,76 @@ interface EventItem {
   image_url: string | null;
 }
 
+function extractPhotos(content: string): { text: string; photos: string[] } {
+  const photos: string[] = [];
+  const text = content.replace(/\[photo\](.*?)\[\/photo\]/g, (_, url) => {
+    photos.push(url.trim());
+    return '';
+  }).trim();
+  return { text, photos };
+}
+
+function EventModal({ item, onClose }: { item: EventItem; onClose: () => void }) {
+  const { text, photos } = extractPhotos(item.description);
+  const allPhotos = [item.image_url, ...photos].filter(Boolean) as string[];
+  const [active, setActive] = useState(0);
+  const cat = CATEGORIES[item.category] || CATEGORIES.event;
+  const d = new Date(item.event_date);
+  const dateStr = d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+  const timeStr = d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/90 flex items-start justify-center overflow-y-auto py-8 px-4">
+      <div className="bg-white w-full max-w-3xl relative">
+        <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 bg-black text-white hover:bg-red-600 transition-colors">
+          <Icon name="X" size={20} />
+        </button>
+        {allPhotos.length > 0 && (
+          <div>
+            <div className="aspect-video overflow-hidden bg-black">
+              <img src={allPhotos[active]} alt={item.title} className="w-full h-full object-cover" />
+            </div>
+            {allPhotos.length > 1 && (
+              <div className="flex gap-px bg-neutral-200">
+                {allPhotos.map((p, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActive(i)}
+                    className={`flex-1 aspect-video overflow-hidden transition-opacity ${active === i ? 'opacity-100 ring-2 ring-red-600' : 'opacity-60 hover:opacity-90'}`}
+                  >
+                    <img src={p} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+        <div className="p-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-xs uppercase tracking-widest px-2 py-1 bg-red-600 text-white flex items-center gap-1">
+              <Icon name={cat.icon} size={12} />
+              {cat.label}
+            </span>
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tighter mb-4 leading-tight">{item.title}</h2>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 pb-6 border-b border-neutral-100">
+            <span className="text-sm flex items-center gap-2 font-bold"><Icon name="Calendar" size={14} />{dateStr}</span>
+            <span className="text-sm flex items-center gap-2 font-bold"><Icon name="Clock" size={14} />{timeStr}</span>
+            {item.venue && <span className="text-sm flex items-center gap-2"><Icon name="MapPin" size={14} />{item.venue}</span>}
+            {item.price && <span className="text-sm font-bold flex items-center gap-2"><Icon name="Ticket" size={14} />{item.price}</span>}
+          </div>
+          <div className="text-neutral-700 leading-relaxed whitespace-pre-line">{text}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function EventsPage() {
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('all');
+  const [selected, setSelected] = useState<EventItem | null>(null);
 
   useEffect(() => {
     fetch(EVENTS_URL)
@@ -48,6 +114,7 @@ export default function EventsPage() {
 
   return (
     <main className="min-h-screen bg-white">
+      {selected && <EventModal item={selected} onClose={() => setSelected(null)} />}
       <nav className="sticky top-0 z-40 bg-white border-b border-black">
         <div className="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <a href="/"><Logo size={36} showText={true} /></a>
@@ -113,8 +180,14 @@ export default function EventsPage() {
             {filtered.map(item => {
               const date = formatDate(item.event_date);
               const cat = CATEGORIES[item.category] || CATEGORIES.event;
+              const { text: descText, photos } = extractPhotos(item.description);
+              const hasMore = photos.length > 0;
               return (
-                <div key={item.id} className="bg-white grid grid-cols-1 md:grid-cols-12 gap-0">
+                <div
+                  key={item.id}
+                  onClick={() => setSelected(item)}
+                  className="bg-white grid grid-cols-1 md:grid-cols-12 gap-0 cursor-pointer hover:bg-neutral-50 transition-colors group"
+                >
                   {/* Date block */}
                   <div className="md:col-span-2 bg-black text-white p-6 flex md:flex-col items-center justify-center gap-4 md:gap-1">
                     <p className="text-5xl md:text-6xl font-bold tracking-tighter leading-none">{date.day}</p>
@@ -126,8 +199,14 @@ export default function EventsPage() {
 
                   {/* Image */}
                   {item.image_url ? (
-                    <div className="md:col-span-3 aspect-video md:aspect-auto overflow-hidden">
+                    <div className="md:col-span-3 aspect-video md:aspect-auto overflow-hidden relative">
                       <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
+                      {hasMore && (
+                        <span className="absolute bottom-2 right-2 bg-black text-white text-xs px-2 py-1 uppercase tracking-widest flex items-center gap-1">
+                          <Icon name="Images" size={12} />
+                          {photos.length + 1}
+                        </span>
+                      )}
                     </div>
                   ) : (
                     <div className="md:col-span-3 bg-neutral-100 flex items-center justify-center p-8">
@@ -148,8 +227,8 @@ export default function EventsPage() {
                           {date.time}
                         </span>
                       </div>
-                      <h2 className="text-2xl font-bold tracking-tighter mb-3 leading-tight">{item.title}</h2>
-                      <p className="text-neutral-600 text-sm leading-relaxed line-clamp-3">{item.description}</p>
+                      <h2 className="text-2xl font-bold tracking-tighter mb-3 leading-tight group-hover:text-red-600 transition-colors">{item.title}</h2>
+                      <p className="text-neutral-600 text-sm leading-relaxed line-clamp-3">{descText}</p>
                     </div>
                     <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-4 pt-4 border-t border-neutral-100">
                       {item.venue && (
