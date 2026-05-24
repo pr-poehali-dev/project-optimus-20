@@ -9,7 +9,7 @@ export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: '#routes', label: 'Маршруты' },
+    { href: '/routes', label: 'Маршруты' },
     { href: '#about', label: 'О проекте' },
     { href: '#content', label: 'Контент' },
     { href: '#platforms', label: 'Платформы' },
@@ -98,7 +98,7 @@ export default function Index() {
             </p>
             <div className="mt-10 flex gap-4">
               <a
-                href="#routes"
+                href="/routes"
                 className="px-8 py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-red-600 transition-colors"
               >
                 Маршруты
