@@ -465,16 +465,12 @@ export default function Index() {
       <footer className="py-8 px-4 md:px-8 bg-black text-white">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm mb-4 md:mb-0">2025 Таганрог Travel Mix. Все права защищены.</p>
-          <div className="flex space-x-8">
-            <a href="#" className="text-sm uppercase tracking-widest hover:text-red-600 transition-colors">
-              ВКонтакте
-            </a>
-            <a href="#" className="text-sm uppercase tracking-widest hover:text-red-600 transition-colors">
-              Telegram
-            </a>
-            <a href="#" className="text-sm uppercase tracking-widest hover:text-red-600 transition-colors">
-              YouTube
-            </a>
+          <div className="flex space-x-6 flex-wrap justify-center gap-y-2">
+            {navLinks.map(link => (
+              <a key={link.href} href={link.href} className="text-sm uppercase tracking-widest hover:text-red-600 transition-colors">
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </footer>
