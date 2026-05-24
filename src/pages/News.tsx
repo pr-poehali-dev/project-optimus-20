@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 import Logo from '@/components/Logo';
 
@@ -27,6 +27,50 @@ function extractPhotos(content: string): { text: string; photos: string[] } {
     return '';
   }).trim();
   return { text, photos };
+}
+
+function NewsCardSlideshow({ photos, title }: { photos: string[]; title: string }) {
+  const [current, setCurrent] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (photos.length <= 1) return;
+    timerRef.current = setInterval(() => {
+      setCurrent(c => (c + 1) % photos.length);
+    }, 3000);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [photos.length]);
+
+  if (photos.length === 0) return null;
+
+  return (
+    <div className="aspect-video overflow-hidden relative">
+      {photos.map((p, i) => (
+        <img
+          key={p}
+          src={p}
+          alt={title}
+          className={`absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`}
+        />
+      ))}
+      {photos.length > 1 && (
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+          {photos.map((_, i) => (
+            <span
+              key={i}
+              className={`w-1.5 h-1.5 rounded-full transition-colors ${i === current ? 'bg-white' : 'bg-white/40'}`}
+            />
+          ))}
+        </div>
+      )}
+      {photos.length > 1 && (
+        <span className="absolute bottom-2 right-2 bg-black text-white text-xs px-2 py-1 uppercase tracking-widest flex items-center gap-1">
+          <Icon name="Images" size={12} />
+          {photos.length}
+        </span>
+      )}
+    </div>
+  );
 }
 
 function NewsModal({ item, onClose }: { item: NewsItem; onClose: () => void }) {
@@ -167,27 +211,15 @@ export default function NewsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-200">
             {filtered.map(item => {
               const { photos } = extractPhotos(item.content);
-              const totalPhotos = [item.image_url, ...photos].filter(Boolean).length;
+              const allPhotos = [item.image_url, ...photos].filter(Boolean) as string[];
               return (
                 <div
                   key={item.id}
                   className="bg-white flex flex-col cursor-pointer group"
                   onClick={() => setSelected(item)}
                 >
-                  {item.image_url && (
-                    <div className="aspect-video overflow-hidden relative">
-                      <img
-                        src={item.image_url}
-                        alt={item.title}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                      />
-                      {totalPhotos > 1 && (
-                        <span className="absolute bottom-2 right-2 bg-black text-white text-xs px-2 py-1 uppercase tracking-widest flex items-center gap-1">
-                          <Icon name="Images" size={12} />
-                          {totalPhotos}
-                        </span>
-                      )}
-                    </div>
+                  {allPhotos.length > 0 && (
+                    <NewsCardSlideshow photos={allPhotos} title={item.title} />
                   )}
                   <div className="p-8 flex flex-col flex-1">
                     <div className="flex items-center gap-3 mb-4">
