@@ -394,13 +394,19 @@ export default function Index() {
           <p className="text-lg text-neutral-600 max-w-2xl mb-12">
             Сотрудничаем с музеями, отелями, ресторанами и туристическими организациями Таганрога.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-neutral-300">
-            {['Музей', 'Отель', 'Ресторан', 'Турагентство', 'Галерея', 'Фестиваль'].map((type) => (
-              <div key={type} className="bg-white flex flex-col items-center justify-center py-10 px-4 group hover:bg-red-600 transition-colors duration-300">
-                <div className="w-12 h-12 border-2 border-black group-hover:border-white mb-4 flex items-center justify-center transition-colors">
-                  <div className="w-4 h-4 bg-black group-hover:bg-white transition-colors"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-neutral-300">
+            {[
+              { tag: 'Туризм', name: 'Туристский информационный центр', short: 'ТИЦ', desc: 'Официальный центр туристической информации Таганрога' },
+              { tag: 'Гастрономия', name: 'Ресторан «Чехов сад»', short: 'ЧЕХОВ САД', desc: 'Гастрономический партнёр проекта — авторская кухня в историческом центре' },
+              { tag: 'Культура', name: 'Музей А.П. Чехова', short: 'МУЗЕЙ ЧЕХОВА', desc: 'Дом-музей великого русского писателя — сердце чеховского маршрута' },
+              { tag: 'Наследие', name: 'Комитет по охране объектов культурного наследия', short: 'КОКН РО', desc: 'Комитет Ростовской области по охране объектов культурного наследия' },
+            ].map((p) => (
+              <div key={p.name} className="bg-white flex flex-col justify-between py-10 px-8 group hover:bg-red-600 transition-colors duration-300 min-h-48">
+                <p className="text-xs uppercase tracking-widest text-neutral-400 group-hover:text-white/70 mb-4 transition-colors">{p.tag}</p>
+                <div>
+                  <p className="text-2xl font-bold tracking-tighter group-hover:text-white transition-colors mb-2">{p.short}</p>
+                  <p className="text-sm text-neutral-500 group-hover:text-white/80 transition-colors leading-snug">{p.desc}</p>
                 </div>
-                <p className="text-xs uppercase tracking-widest text-neutral-500 group-hover:text-white text-center transition-colors">{type}</p>
               </div>
             ))}
           </div>
