@@ -10,6 +10,7 @@ export default function Index() {
 
   const navLinks = [
     { href: '/routes', label: 'Маршруты' },
+    { href: '/news', label: 'Новости' },
     { href: '#about', label: 'О проекте' },
     { href: '#content', label: 'Контент' },
     { href: '#platforms', label: 'Платформы' },
