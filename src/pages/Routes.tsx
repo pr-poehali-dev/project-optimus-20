@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import Logo from '@/components/Logo';
 
 const routes = [
   {
@@ -36,8 +37,8 @@ export default function RoutesPage() {
       {/* Header */}
       <nav className="sticky top-0 z-50 bg-white border-b border-black">
         <div className="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-          <a href="/" className="text-xl font-bold tracking-tighter">
-            TAGANROG<span className="text-red-600">·</span>MIX
+          <a href="/">
+            <Logo size={36} showText={true} />
           </a>
           <a
             href="/"
