@@ -365,14 +365,14 @@ export default function Index() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { num: '01', role: 'Главный редактор', name: 'Имя Фамилия', desc: 'Стратегия, редполитика, партнёрства' },
-              { num: '02', role: 'Журналист', name: 'Имя Фамилия', desc: 'Репортажи, маршруты, интервью' },
-              { num: '03', role: 'Фотограф', name: 'Имя Фамилия', desc: 'Фоторепортажи, визуальный контент' },
-              { num: '04', role: 'SMM-редактор', name: 'Имя Фамилия', desc: 'Соцсети, Telegram, комьюнити' },
+              { num: '01', initials: 'БА', role: 'Директор, главный редактор, журналист', name: 'Белеванцева Анастасия', desc: 'Стратегическое руководство, редакционная политика, авторские материалы' },
+              { num: '02', initials: 'СА', role: 'Ответственный секретарь', name: 'Сахненко Анастасия', desc: 'Реализация редакционной политики, планирование и координация деятельности' },
+              { num: '03', initials: 'РЮ', role: 'SMM-специалист, мобильный журналист', name: 'Ручкина Юлия', desc: 'Продвижение в соцсетях, адаптация материалов под платформы, привлечение подписчиков' },
+              { num: '04', initials: 'РВ', role: 'Digital-специалист', name: 'Ручкин Владислав', desc: 'Техническая поддержка и работа с современными технологиями' },
             ].map((m) => (
               <div key={m.num} className="group border-t-2 border-black pt-6">
                 <div className="aspect-square bg-neutral-100 mb-4 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
-                  <span className="text-5xl font-bold text-neutral-300 group-hover:text-white transition-colors">{m.num}</span>
+                  <span className="text-4xl font-bold tracking-tighter text-neutral-400 group-hover:text-white transition-colors px-2 text-center leading-tight">{m.initials}</span>
                 </div>
                 <p className="text-xs uppercase tracking-widest text-red-600 mb-1">{m.role}</p>
                 <h3 className="text-lg font-bold">{m.name}</h3>
