@@ -1,10 +1,22 @@
 import { useState } from 'react';
+import Icon from '@/components/ui/icon';
 
 const CONTACT_URL = 'https://functions.poehali.dev/d6c9cb19-1280-43fc-8456-88f3c14c0857';
 
 export default function Index() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    { href: '#routes', label: 'Маршруты' },
+    { href: '#about', label: 'О проекте' },
+    { href: '#content', label: 'Контент' },
+    { href: '#platforms', label: 'Платформы' },
+    { href: '#team', label: 'Команда' },
+    { href: '#partners', label: 'Партнёры' },
+    { href: '#contact', label: 'Контакты' },
+  ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm(prev => ({ ...prev, [e.target.id]: e.target.value }));
@@ -38,18 +50,38 @@ export default function Index() {
           <a href="/" className="text-xl font-bold tracking-tighter">
             TAGANROG<span className="text-red-600">·</span>MIX
           </a>
-          <div className="flex space-x-8">
-            <a href="#routes" className="text-sm uppercase tracking-widest hover:text-red-600 transition-colors">
-              Маршруты
-            </a>
-            <a href="#about" className="text-sm uppercase tracking-widest hover:text-red-600 transition-colors">
-              О проекте
-            </a>
-            <a href="#contact" className="text-sm uppercase tracking-widest hover:text-red-600 transition-colors">
-              Контакты
-            </a>
+          {/* Desktop nav */}
+          <div className="hidden lg:flex space-x-6">
+            {navLinks.map(link => (
+              <a key={link.href} href={link.href} className="text-xs uppercase tracking-widest hover:text-red-600 transition-colors">
+                {link.label}
+              </a>
+            ))}
           </div>
+          {/* Mobile burger */}
+          <button
+            className="lg:hidden p-1"
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label="Меню"
+          >
+            <Icon name={menuOpen ? 'X' : 'Menu'} size={24} />
+          </button>
         </div>
+        {/* Mobile dropdown */}
+        {menuOpen && (
+          <div className="lg:hidden bg-white border-t border-black">
+            {navLinks.map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="block px-6 py-3 text-sm uppercase tracking-widest border-b border-neutral-100 hover:bg-red-600 hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
