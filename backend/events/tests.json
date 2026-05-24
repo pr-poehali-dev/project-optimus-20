@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "name": "GET список событий",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST без пароля — 403",
+      "method": "POST",
+      "path": "/",
+      "body": {"title": "Тест", "description": "Текст", "category": "theatre", "event_date": "2026-01-01T19:00:00Z"},
+      "expectedStatus": 403,
+      "bodyMatcher": "partial"
+    }
+  ]
+}

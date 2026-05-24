@@ -11,6 +11,7 @@ export default function Index() {
 
   const navLinks = [
     { href: '/routes', label: 'Маршруты' },
+    { href: '/events', label: 'Афиша' },
     { href: '/news', label: 'Новости' },
     { href: '#about', label: 'О проекте' },
     { href: '#content', label: 'Контент' },
