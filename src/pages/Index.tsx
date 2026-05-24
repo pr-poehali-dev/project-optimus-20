@@ -1,4 +1,35 @@
+import { useState } from 'react';
+
+const CONTACT_URL = 'https://functions.poehali.dev/d6c9cb19-1280-43fc-8456-88f3c14c0857';
+
 export default function Index() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm(prev => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      const res = await fetch(CONTACT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setStatus('success');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white">
       {/* Navigation */}
@@ -179,47 +210,73 @@ export default function Index() {
               </div>
             </div>
             <div>
-              <form className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm uppercase tracking-widest mb-2">
-                    Имя
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full bg-transparent border-b-2 border-white py-2 px-0 focus:outline-none focus:border-black placeholder-white/50"
-                    placeholder="Ваше имя"
-                  />
+              {status === 'success' ? (
+                <div className="flex flex-col items-start justify-center h-full py-16">
+                  <p className="text-3xl font-bold tracking-tighter mb-4">Сообщение отправлено!</p>
+                  <p className="text-white/80 text-lg">Мы свяжемся с вами в ближайшее время.</p>
+                  <button
+                    onClick={() => setStatus('idle')}
+                    className="mt-8 px-8 py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-colors"
+                  >
+                    Написать ещё
+                  </button>
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm uppercase tracking-widest mb-2">
-                    Почта
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full bg-transparent border-b-2 border-white py-2 px-0 focus:outline-none focus:border-black placeholder-white/50"
-                    placeholder="Ваш email"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm uppercase tracking-widest mb-2">
-                    Сообщение
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    className="w-full bg-transparent border-b-2 border-white py-2 px-0 focus:outline-none focus:border-black placeholder-white/50"
-                    placeholder="Расскажите о вашем предложении или вопросе"
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  className="mt-8 px-8 py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-colors"
-                >
-                  Отправить
-                </button>
-              </form>
+              ) : (
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  <div>
+                    <label htmlFor="name" className="block text-sm uppercase tracking-widest mb-2">
+                      Имя
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-transparent border-b-2 border-white py-2 px-0 focus:outline-none focus:border-black placeholder-white/50"
+                      placeholder="Ваше имя"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm uppercase tracking-widest mb-2">
+                      Почта
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-transparent border-b-2 border-white py-2 px-0 focus:outline-none focus:border-black placeholder-white/50"
+                      placeholder="Ваш email"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm uppercase tracking-widest mb-2">
+                      Сообщение
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={4}
+                      value={form.message}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-transparent border-b-2 border-white py-2 px-0 focus:outline-none focus:border-black placeholder-white/50"
+                      placeholder="Расскажите о вашем предложении или вопросе"
+                    ></textarea>
+                  </div>
+                  {status === 'error' && (
+                    <p className="text-white/80 text-sm">Что-то пошло не так. Попробуйте ещё раз.</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="mt-8 px-8 py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-colors disabled:opacity-50"
+                  >
+                    {status === 'loading' ? 'Отправка...' : 'Отправить'}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>
