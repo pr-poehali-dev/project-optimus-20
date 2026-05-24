@@ -165,7 +165,7 @@ export default function NewsPage() {
       {/* Hero */}
       <section className="py-16 px-4 md:px-8 border-b border-black">
         <div className="container mx-auto">
-          <h1 className="text-7xl md:text-8xl font-bold tracking-tighter leading-none mb-4">НОВОСТИ</h1>
+          <h1 className="text-7xl md:text-8xl font-bold tracking-tighter leading-none mb-4 text-[#FFD600]">НОВОСТИ</h1>
           <p className="text-xl text-neutral-600 max-w-2xl">
             Что делается в Таганроге — реальные улучшения города, реализованные проекты и планы на будущее.
           </p>
