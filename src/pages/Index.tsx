@@ -401,9 +401,9 @@ export default function Index() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { num: '01', photo: 'https://cdn.poehali.dev/projects/9f1f4cbd-bec2-42e2-a0ff-63159f683471/bucket/81d5d7ae-6172-40bc-a195-b9a8384785bb.jpg', role: 'Директор, главный редактор, журналист', name: 'Белеванцева Анастасия', desc: 'Стратегическое руководство, редакционная политика, авторские материалы' },
+              { num: '01', photo: 'https://cdn.poehali.dev/projects/9f1f4cbd-bec2-42e2-a0ff-63159f683471/bucket/8e191a5c-9f7c-4a06-8ef6-fc6473007b3a.jpg', role: 'Директор, главный редактор, журналист', name: 'Белеванцева Анастасия', desc: 'Стратегическое руководство, редакционная политика, авторские материалы' },
               { num: '02', photo: 'https://cdn.poehali.dev/projects/9f1f4cbd-bec2-42e2-a0ff-63159f683471/bucket/5457308c-6e67-46cc-872b-87a5e929a5f9.jpg', role: 'Ответственный секретарь', name: 'Сахненко Анастасия', desc: 'Реализация редакционной политики, планирование и координация деятельности' },
-              { num: '03', photo: 'https://cdn.poehali.dev/projects/9f1f4cbd-bec2-42e2-a0ff-63159f683471/bucket/8e191a5c-9f7c-4a06-8ef6-fc6473007b3a.jpg', role: 'SMM-специалист, мобильный журналист', name: 'Ручкина Юлия', desc: 'Продвижение в соцсетях, адаптация материалов под платформы, привлечение подписчиков' },
+              { num: '03', photo: 'https://cdn.poehali.dev/projects/9f1f4cbd-bec2-42e2-a0ff-63159f683471/bucket/81d5d7ae-6172-40bc-a195-b9a8384785bb.jpg', role: 'SMM-специалист, мобильный журналист', name: 'Бржезицкая Юлия', desc: 'Продвижение в соцсетях, адаптация материалов под платформы, привлечение подписчиков' },
               { num: '04', photo: 'https://cdn.poehali.dev/projects/9f1f4cbd-bec2-42e2-a0ff-63159f683471/bucket/44a6c2e6-e0ef-48eb-97fe-14a04edd1bf9.jpg', role: 'Digital-специалист', name: 'Ручкин Владислав', desc: 'Техническая поддержка и работа с современными технологиями' },
             ].map((m) => (
               <div key={m.num} className="group border-t-2 border-black pt-6">
