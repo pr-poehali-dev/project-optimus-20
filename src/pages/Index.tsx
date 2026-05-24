@@ -282,6 +282,143 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Content Directions Section */}
+      <section id="content" className="py-20 px-4 md:px-8">
+        <div className="container mx-auto">
+          <h2 className="text-6xl font-bold tracking-tighter mb-4">КОНТЕНТ</h2>
+          <p className="text-lg text-neutral-600 max-w-2xl mb-12">
+            Каждая тема «распаковывается» на разноформатные материалы под конкретные платформы и аудиторные запросы.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-black">
+            {/* Direction 1 */}
+            <div className="border-b md:border-b-0 md:border-r border-black p-8">
+              <div className="text-red-600 text-5xl font-bold tracking-tighter mb-6">01</div>
+              <h3 className="text-xl font-bold uppercase tracking-widest mb-4">Вдохновляющий</h3>
+              <p className="text-neutral-600 mb-6">Формируем привлекательный образ Таганрога — города, в который хочется приехать и возвращаться.</p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Видеообзоры Reels, Shorts, VK Клипы</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Длинные версии для YouTube и RuTube</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Фоторепортажи с городских фестивалей</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Аудиопрогулки и подкасты</li>
+              </ul>
+            </div>
+            {/* Direction 2 */}
+            <div className="border-b md:border-b-0 md:border-r border-black p-8">
+              <div className="text-red-600 text-5xl font-bold tracking-tighter mb-6">02</div>
+              <h3 className="text-xl font-bold uppercase tracking-widest mb-4">Практический</h3>
+              <p className="text-neutral-600 mb-6">Исчерпывающая информация для планирования визита и навигации по городу.</p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Интерактивная карта с GPS-метками</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Маршруты выходного дня с таймингом</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> PDF-гиды для скачивания</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Афиша с фильтрами по дате и типу</li>
+              </ul>
+            </div>
+            {/* Direction 3 */}
+            <div className="p-8">
+              <div className="text-red-600 text-5xl font-bold tracking-tighter mb-6">03</div>
+              <h3 className="text-xl font-bold uppercase tracking-widest mb-4">Новостной</h3>
+              <p className="text-neutral-600 mb-6">Оперативная информация о культурной и туристической жизни города.</p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Новости в Telegram и ВКонтакте</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Репортажи с городских событий</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> «Оборона Таганрога», джаз-фестивали</li>
+                <li className="flex gap-2"><span className="text-red-600 font-bold">—</span> Театральные премьеры, День города</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Platforms Section */}
+      <section id="platforms" className="py-20 px-4 md:px-8 bg-black text-white">
+        <div className="container mx-auto">
+          <h2 className="text-6xl font-bold tracking-tighter mb-4">ПЛАТФОРМЫ</h2>
+          <p className="text-neutral-400 mb-12 text-lg max-w-2xl">
+            Единая медиаэкосистема: все платформы связаны перекрёстным промо и ведут на главный сайт.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-800">
+            {[
+              { name: 'Сайт', desc: 'Ядро экосистемы. Лента, афиша, карта, каталог заведений. Mobile-first.', tag: 'taganrogtravel.ru' },
+              { name: 'Telegram', desc: 'Оперативные анонсы, новости, опросы. В перспективе — чат-бот для туристов.', tag: 'Канал' },
+              { name: 'ВКонтакте', desc: 'Фото, видеоальбомы, «Фото дня от подписчика», конкурсы и обсуждения.', tag: 'Сообщество' },
+              { name: 'YouTube / RuTube', desc: 'Видеообзоры, документальные экскурсии, подкасты. Монетизация через рекламу.', tag: 'Видео' },
+              { name: 'Дзен', desc: 'Дистрибуция текстового контента через алгоритмическую рекомендательную систему.', tag: 'Медиа' },
+              { name: 'Одноклассники', desc: 'Визуальный контент и афиша для возрастной и семейной аудитории региона.', tag: 'Соцсеть' },
+            ].map((p) => (
+              <div key={p.name} className="bg-black p-8 group hover:bg-red-600 transition-colors duration-300">
+                <p className="text-xs uppercase tracking-widest text-neutral-500 group-hover:text-white/70 mb-3">{p.tag}</p>
+                <h3 className="text-xl font-bold mb-3">{p.name}</h3>
+                <p className="text-neutral-400 group-hover:text-white/80 text-sm">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section id="team" className="py-20 px-4 md:px-8">
+        <div className="container mx-auto">
+          <h2 className="text-6xl font-bold tracking-tighter mb-4">КОМАНДА</h2>
+          <p className="text-lg text-neutral-600 max-w-2xl mb-12">
+            Редакция «Таганрог Travel Mix» — журналисты, фотографы и краеведы, влюблённые в свой город.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { num: '01', role: 'Главный редактор', name: 'Имя Фамилия', desc: 'Стратегия, редполитика, партнёрства' },
+              { num: '02', role: 'Журналист', name: 'Имя Фамилия', desc: 'Репортажи, маршруты, интервью' },
+              { num: '03', role: 'Фотограф', name: 'Имя Фамилия', desc: 'Фоторепортажи, визуальный контент' },
+              { num: '04', role: 'SMM-редактор', name: 'Имя Фамилия', desc: 'Соцсети, Telegram, комьюнити' },
+            ].map((m) => (
+              <div key={m.num} className="group border-t-2 border-black pt-6">
+                <div className="aspect-square bg-neutral-100 mb-4 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
+                  <span className="text-5xl font-bold text-neutral-300 group-hover:text-white transition-colors">{m.num}</span>
+                </div>
+                <p className="text-xs uppercase tracking-widest text-red-600 mb-1">{m.role}</p>
+                <h3 className="text-lg font-bold">{m.name}</h3>
+                <p className="text-sm text-neutral-500 mt-1">{m.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section id="partners" className="py-20 px-4 md:px-8 bg-neutral-100">
+        <div className="container mx-auto">
+          <h2 className="text-6xl font-bold tracking-tighter mb-4">ПАРТНЁРЫ</h2>
+          <p className="text-lg text-neutral-600 max-w-2xl mb-12">
+            Сотрудничаем с музеями, отелями, ресторанами и туристическими организациями Таганрога.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-neutral-300">
+            {['Музей', 'Отель', 'Ресторан', 'Турагентство', 'Галерея', 'Фестиваль'].map((type) => (
+              <div key={type} className="bg-white flex flex-col items-center justify-center py-10 px-4 group hover:bg-red-600 transition-colors duration-300">
+                <div className="w-12 h-12 border-2 border-black group-hover:border-white mb-4 flex items-center justify-center transition-colors">
+                  <div className="w-4 h-4 bg-black group-hover:bg-white transition-colors"></div>
+                </div>
+                <p className="text-xs uppercase tracking-widest text-neutral-500 group-hover:text-white text-center transition-colors">{type}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 border-t border-neutral-300 pt-8">
+            <p className="text-neutral-500 text-sm uppercase tracking-widest mb-4">Бизнес-модель</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { title: 'Нативная реклама', desc: 'Гастрообзоры, интервью с шеф-поварами, видеоэкскурсии по отелям' },
+                { title: 'Партнёрские программы', desc: 'Комиссии от бронирований через Ostrovok, Яндекс.Путешествия, гиды' },
+                { title: 'Гранты', desc: 'Росмолодёжь, Фонд президентских грантов, региональные программы туризма' },
+                { title: 'Цифровые продукты', desc: 'PDF-гиды, аудиогиды, премиум-доступ к архиву маршрутов' },
+              ].map((item) => (
+                <div key={item.title} className="border-l-2 border-red-600 pl-4">
+                  <h4 className="font-bold mb-1">{item.title}</h4>
+                  <p className="text-sm text-neutral-500">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="py-8 px-4 md:px-8 bg-black text-white">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
